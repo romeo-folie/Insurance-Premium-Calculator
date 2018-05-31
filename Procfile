@@ -1,1 +1,1 @@
-web: gunicorn motorInsurance.wsgi
+web: python manage.py runserver
