@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Insurance Calculator</title>
+</head>
+<body>
+  <div>
+  <form method="POST">
+    <h3>Insurance Information</h3>
+    {{ insuranceForm.as_p }}
+    <em>hints: "third party", "comprehensive"</em>
+
+    <h3>Car Information</h3>
+    {{ carInfoForm.as_p }}
+    <em>hints: Type of vehicle = "taxi", "maxi bus", "motor cycle", "x1", "x4"</em>
+
+    <h3>Driver Information</h3>
+    {{ driverInfoForm.as_p }}
+
+
+
+    {% csrf_token %}
+    <input type="submit", value="Calculate">
+  </form>
+  </div>
+</body>
+</html>
