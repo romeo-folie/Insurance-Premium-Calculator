@@ -23,9 +23,9 @@ TEMPLATE_DIR = os.path.join(BASE_DIR, "templates")
 SECRET_KEY = 'de1tz4m-m-@sb=y6u95-3ii6nd3px3#%ffoi#ys!p^r07do=32'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1','localhost','nsurance-premium-calculator.herokuapp.com']
 
 
 # Application definition
