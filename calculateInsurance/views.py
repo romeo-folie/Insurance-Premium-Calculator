@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from calculateInsurance import forms
-from django.http import HttpResponse
+#from django.http import HttpResponse
 
 
 # Create your views here.
@@ -19,19 +19,23 @@ def calculate_insurance(request):
     cForm = forms.CarForm()
     driForm = forms.DriverForm()
 
-# and insForm.is_valid() and cForm.is_valid() and driForm.is_valid()
+# and
     if request.method == "POST":
         insForm = forms.InsuranceForm(request.POST)
         cForm = forms.CarForm(request.POST)
         driForm = forms.DriverForm(request.POST)
-        insForm.save(commit=True)
-        cForm.save(commit=True)
-        driForm.save(commit=True)
+
+        if insForm.is_valid() and cForm.is_valid() and driForm.is_valid():
+            insForm.save(commit=True)
+            cForm.save(commit=True)
+            driForm.save(commit=True)
+        else:
+            print(insForm.errors, cForm.errors, driForm.errors)
 
         #get the seat number and pass it to the global seat number variable
         global globalSeatNumber
         globalSeatNumber = cForm.getSeatNumber()
-        print(globalSeatNumber)
+        # print(globalSeatNumber)
 
         if(insForm.getInsuranceType().lower() == "third party") and (cForm.getTypeOfRisk().lower() == "x1"):
             return render(request, 'calculateInsurance/result.html',{'insPrice': premiumForPrivateThirdParty()[0], 'insPerDay':premiumForPrivateThirdParty()[1], 'carType':"X1", 'insuranceType':"Third Party"})
@@ -74,6 +78,7 @@ def premiumForPrivateThirdParty():
     extraSeatLoading = globalSeatNumber * 5
     firstResult = TP_basic_premium + old_age_loading
     Total = firstResult + extraSeatLoading + inexperienced_driver_loading + extraTTPD + additional_perils + ecowas_perils + PA_benefits + nicNhisNrscEcowas
+    perDay = Total/365
     return [Total,perDay]
 
 def premiumForTaxiThirdParty():
